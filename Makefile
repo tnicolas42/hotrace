@@ -30,7 +30,7 @@ FILES = main.c \
 HFILES = includes/hotrace.h
 
 CC = gcc
-CFLAGS = -O3 -Wall -Wextra ########## -Werror
+CFLAGS = -g -O3 -Wall -Wextra ########## -Werror
 
 OBJS_DIR = objs/
 SRCS_DIR = srcs/

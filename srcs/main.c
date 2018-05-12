@@ -155,13 +155,33 @@ int			ft_parse(t_a *a)
 
 int			ft_init(t_a *a)
 {
-//	ft_bzero(a, sizeof(a));
 	a->str = NULL;
 	if (!(a->arr = malloc(SIZE_ARR * sizeof(t_tree*))))
 		return (ERROR);
+	ft_bzero(a->arr, SIZE_ARR * sizeof(t_tree*));
 	return (SUCCESS);
 }
-#include <limits.h>
+
+void		ft_free_tree(t_tree *t)
+{
+	if (!t)
+		return ;
+	ft_free_tree(t->left);
+	ft_free_tree(t->right);
+	free(t);
+}
+
+int			ft_free(t_a *a)
+{
+	int		i;
+
+	free(a->str);
+	i = -1;
+	while (++i < SIZE_ARR)
+		ft_free_tree(a->arr[i]);
+	return (SUCCESS);
+}
+
 int			main(int ac, char **av)
 {
 	t_a		a;
@@ -173,6 +193,8 @@ int			main(int ac, char **av)
 	if (ft_read_fd(STDIN_FILENO, &(a.str)) == 0)
 		return (EXIT_FAILURE);
 	if (ft_parse(&a) == ERROR)
+		return (EXIT_FAILURE);
+	if (ft_free(&a) == ERROR)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }

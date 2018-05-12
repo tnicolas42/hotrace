@@ -27,12 +27,14 @@
 
 int			ft_read_fd(int fd, char **file_content)
 {
-	char	buf[BUFF_SIZE + 1];
+	char	*buf;
 	int		ret_read;
 	int		sz_file;
 
+	if (!(buf = malloc(sizeof(char) * (BUFF_SIZE + 1))))
+		return (0);
 	sz_file = 0;
-	if (!(*file_content = malloc(sizeof(**file_content))))
+	if (!(*file_content = malloc(sizeof(char))))
 		return (0);
 	(*file_content)[0] = '\0';
 	while ((ret_read = read(fd, buf, BUFF_SIZE)) > 0)
@@ -43,6 +45,7 @@ int			ft_read_fd(int fd, char **file_content)
 		sz_file += ret_read;
 		ft_strncat(*file_content, buf, ret_read);
 	}
+	free(buf);
 	if (ret_read < 0)
 		return (0);
 	return (sz_file);
