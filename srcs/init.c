@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmilan <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: pmilan <pmilan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/12 19:35:43 by pmilan            #+#    #+#             */
-/*   Updated: 2018/05/12 19:35:49 by pmilan           ###   ########.fr       */
+/*   Updated: 2018/05/12 19:51:38 by emarin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 int			ft_init(t_a *a)
 {
 	a->str = NULL;
-	if (!(a->arr = malloc(SIZE_ARR * sizeof(t_tree*))))
+	if (!(a->arr = malloc(sizeof(t_tree*) * SIZE_ARR)))
 		return (ERROR);
 	ft_bzero(a->arr, SIZE_ARR * sizeof(t_tree*));
 	return (SUCCESS);
