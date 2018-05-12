@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/11 22:02:34 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/05/12 14:02:27 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/05/12 15:14:57 by pmilan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,10 @@ int			ft_add_key(t_a *a, t_tree *new, int index)
 	}
 	else
 	{
+//		puts("start_add");
 		if (ft_tree_add(a->arr[index], new) == ERROR)
 			return (ERROR);
+//		puts("end_add");
 	}
 	return (SUCCESS);
 }
@@ -63,7 +65,11 @@ int			ft_algo(char *key, int len)
 {
 	int		ret;
 
-	ret = super_fast_hash(key, len) >> 16;
+//	if (key[1] == 'A')
+//		return 60001;
+//	return 31115;
+	ret = super_fast_hash(key, len) >> 15;
+//	printf("ret algo\t%d\n", ret);
 	return (ret);
 }
 
@@ -72,17 +78,28 @@ int			ft_parse_get(t_a *a, int start)
 	int		index;
 	t_tree	*result;
 	int		i;
+	char	error[] = ": Not found.\n";
+	int		len;
 
 	i = start - 1;
 	while (a->str[++i])
 	{
 		if (a->str[i] == '\n')
 		{
-			index = ft_algo(&(a->str[start]), ft_len(&(a->str[start]), '\n'));
-			result = ft_tree_get(a->arr[index], &(a->str[start]));
+			len = ft_len(&(a->str[start]), '\n');
+			index = ft_algo(&(a->str[start]), len);
+			result = ft_tree_get(a->arr[index], &(a->str[start]), len);
+			if (result == NULL)
+			{
+				write(STDOUT_FILENO, &(a->str[start]), ft_len(&(a->str[start]), '\n'));
+				write(STDOUT_FILENO, error, ft_strlen(error));
+			}
+			else
+			{
+				write(STDOUT_FILENO, result->value, result->len_value);
+				write(STDOUT_FILENO, "\n", 1);
+			}
 			start = i + 1;
-			write(STDOUT_FILENO, result->value, result->len_value);
-			write(STDOUT_FILENO, "\n", 1);
 		}
 	}
 	return (SUCCESS);

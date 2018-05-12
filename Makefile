@@ -6,7 +6,7 @@
 #    By: ynacache <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/08 10:53:49 by ynacache          #+#    #+#              #
-#    Updated: 2018/02/01 00:14:19 by tnicolas         ###   ########.fr        #
+#    Updated: 2018/05/12 15:06:46 by pmilan           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ FILES = main.c \
 HFILES = includes/hotrace.h
 
 CC = gcc
-CFLAGS = -Wall -Wextra ########## -Werror
+CFLAGS = -O3 -Wall -Wextra ########## -Werror
 
 OBJS_DIR = objs/
 SRCS_DIR = srcs/
