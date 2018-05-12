@@ -6,7 +6,7 @@
 /*   By: emarin <emarin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/12 11:39:25 by emarin            #+#    #+#             */
-/*   Updated: 2018/05/12 12:11:24 by emarin           ###   ########.fr       */
+/*   Updated: 2018/05/12 19:10:50 by pmilan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,19 @@ uint32_t		super_fast_hash(const char *data, int len)
 	hash ^= hash << 25;
 	hash += hash >> 6;
 	return (hash);
+}
+
+int				ft_hash(t_a *a, int start)
+{
+	t_tree	new;
+	int		index;
+
+	new.len_key = ft_len(&(a->str[start]), '\n');
+	new.key = &(a->str[start]);
+	new.value = &(a->str[start + new.len_key + 1]);
+	new.len_value = ft_len(&(a->str[start + new.len_key + 1]), '\n');
+	index = super_fast_hash(new.key, new.len_key) >> (32 - SIZE);
+	if (ft_add_key(a, &new, index) == ERROR)
+		return (ERROR);
+	return (SUCCESS);
 }

@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: pmilan <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/07 09:58:25 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/05/12 11:01:20 by tnicolas         ###   ########.fr       */
+/*   Created: 2018/05/12 19:35:43 by pmilan            #+#    #+#             */
+/*   Updated: 2018/05/12 19:35:49 by pmilan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*
 **   ____________________________________________________________
-**   | ft_strdup.c                                              |
-**   |     ft_strdup(10 lines)                                  |
+**   | init.c                                                   |
+**   |     ft_init(5 lines)                                     |
 **   ------------------------------------------------------------
 **           __n__n__  /
 **    .------`-\00/-'/
@@ -23,18 +23,13 @@
 **     |||   |||
 */
 
-# include <hotrace.h>
+#include <hotrace.h>
 
-char		*ft_strdup(const char *s1)
+int			ft_init(t_a *a)
 {
-	char	*ret;
-	int		i;
-
-	if (!(ret = (char*)malloc(sizeof(*ret) * (ft_strlen(s1) + 1))))
-		return (NULL);
-	i = -1;
-	while (s1[++i])
-		ret[i] = s1[i];
-	ret[i] = '\0';
-	return (ret);
+	a->str = NULL;
+	if (!(a->arr = malloc(SIZE_ARR * sizeof(t_tree*))))
+		return (ERROR);
+	ft_bzero(a->arr, SIZE_ARR * sizeof(t_tree*));
+	return (SUCCESS);
 }
