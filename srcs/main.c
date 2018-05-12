@@ -6,7 +6,7 @@
 /*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/11 22:02:34 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/05/12 17:08:25 by emarin           ###   ########.fr       */
+/*   Updated: 2018/05/12 18:40:47 by pmilan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,8 @@ int			ft_add_key(t_a *a, t_tree *new, int index)
 	}
 	else
 	{
-//		puts("start_add");
 		if (ft_tree_add(a->arr[index], new) == ERROR)
 			return (ERROR);
-//		puts("end_add");
 	}
 	return (SUCCESS);
 }
@@ -59,18 +57,6 @@ int			ft_len(char *s, char c)
 	while (s[++i] != c && s[i])
 		;
 	return (i);
-}
-
-int			ft_algo(char *key, int len)
-{
-	int		ret;
-
-//	if (key[1] == 'A')
-//		return 60001;
-//	return 31115;
-	ret = super_fast_hash(key, len) >> (32 - SIZE);
-//	printf("ret algo\t%d\n", ret);
-	return (ret);
 }
 
 int			ft_parse_get(t_a *a, int start)
@@ -86,18 +72,15 @@ int			ft_parse_get(t_a *a, int start)
 		if (a->str[i] == '\n')
 		{
 			len = ft_len(&(a->str[start]), '\n');
-			index = ft_algo(&(a->str[start]), len);
+			index = super_fast_hash(&(a->str[start]), len) >> (32 - SIZE);
 			result = ft_tree_get(a->arr[index], &(a->str[start]), len);
 			if (result == NULL)
 			{
-				write(STDOUT_FILENO, &(a->str[start]), ft_len(&(a->str[start]), '\n'));
+				write(STDOUT_FILENO, &(a->str[start]), len);
 				write(STDOUT_FILENO, ": Not found.\n", 13);
 			}
 			else
-			{
 				write(STDOUT_FILENO, result->value, result->len_value + 1);
-//				write(STDOUT_FILENO, "\n", 1);
-			}
 			start = i + 1;
 		}
 	}
@@ -113,7 +96,7 @@ int			ft_hash(t_a *a, int start)
 	new.key = &(a->str[start]);
 	new.value = &(a->str[start + new.len_key + 1]);
 	new.len_value = ft_len(&(a->str[start + new.len_key + 1]), '\n');
-	index = ft_algo(new.key, new.len_key);
+	index = super_fast_hash(new.key, new.len_key) >> (32 - SIZE);
 	if (ft_add_key(a, &new, index) == ERROR)
 		return (ERROR);
 	return (SUCCESS);
@@ -125,7 +108,6 @@ int			ft_parse(t_a *a)
 	int		i;
 	int		nb_nl;
 
-//	dprintf(STDERR_FILENO, "%d\n", SIZE_ARR);
 	nb_nl = 0;
 	start = 0;
 	i = -1;
@@ -181,12 +163,10 @@ int			ft_free(t_a *a)
 	return (SUCCESS);
 }
 
-int			main(int ac, char **av)
+int			main(void)
 {
 	t_a		a;
 
-	(void)ac;
-	(void)av;
 	if (ft_init(&a) == ERROR)
 		return (EXIT_FAILURE);
 	if (ft_read_fd(STDIN_FILENO, &(a.str)) == 0)

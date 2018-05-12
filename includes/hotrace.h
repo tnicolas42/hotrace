@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/11 21:59:43 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/05/12 15:47:45 by pmilan           ###   ########.fr       */
+/*   Updated: 2018/05/12 18:45:01 by pmilan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,10 @@ typedef struct		s_a
 	char			*str;
 }					t_a;
 
-size_t		ft_strlen(const char *str);
 void		ft_bzero(void *s, size_t n);
-int			ft_strcmp(const char *s1, const char *s2);
+size_t		ft_strlen(const char *str);
 char		*ft_strdup(const char *s1);
+int			ft_strcmp(const char *s1, const char *s2);
 int			ft_read_fd(int fd, char **file_content);
 void		*ft_realloc(void *ptr, size_t original_size, size_t new_size);
 char		*ft_strncat(char *dest, const char *src, size_t n);
