@@ -54,3 +54,4 @@ dkms.conf
 *.vim
 *.swp
 .DS_Store
+hotrace
