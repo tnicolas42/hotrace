@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/11 22:02:34 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/05/12 17:01:23 by pmilan           ###   ########.fr       */
+/*   Updated: 2018/05/12 17:08:25 by emarin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ int			ft_parse_get(t_a *a, int start)
 	int		index;
 	t_tree	*result;
 	int		i;
-	char	*error = ": Not found.\n";
 	int		len;
 
 	i = start - 1;
@@ -92,7 +91,7 @@ int			ft_parse_get(t_a *a, int start)
 			if (result == NULL)
 			{
 				write(STDOUT_FILENO, &(a->str[start]), ft_len(&(a->str[start]), '\n'));
-				write(STDOUT_FILENO, error, ft_strlen(error));
+				write(STDOUT_FILENO, ": Not found.\n", 13);
 			}
 			else
 			{
