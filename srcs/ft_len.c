@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_len.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmilan <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: pmilan <pmilan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/12 19:14:30 by pmilan            #+#    #+#             */
-/*   Updated: 2018/05/12 19:16:14 by pmilan           ###   ########.fr       */
+/*   Updated: 2018/05/12 19:40:57 by emarin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,24 @@
 
 #include <hotrace.h>
 
-int			ft_len(char *s, char c)
+int	ft_len(char *s, char c)
 {
-	int		i;
+	unsigned	x;
+	int			len;
 
-	i = -1;
-	while (s[++i] != c && s[i])
-		;
-	return (i);
+	len = 0;
+	while (42)
+	{
+		x = *(unsigned*)s;
+		if ((x & 0xFF) == 0 || (x & 0xFF) == c)
+			return (len);
+		if ((x & 0xFF00) == 0 || (x & 0xFF00) >> 8 == c)
+			return (len + 1);
+		if ((x & 0xFF0000) == 0 || (x & 0xFF0000) >> 16 == c)
+			return (len + 2);
+		if ((x & 0xFF000000) == 0 || (x & 0xFF000000) >> 24 == c)
+			return (len + 3);
+		s += 4;
+		len += 4;
+	}
 }
