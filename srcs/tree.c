@@ -64,7 +64,7 @@ int			ft_tree_add(t_tree *arri, t_tree *new)
 	}
 	else if (cmp == SAME)
 	{
-		arri->value new->value;
+		arri->value = new->value;
 		arri->len_value = new->len_value;
 	}
 	return (SUCCESS);
