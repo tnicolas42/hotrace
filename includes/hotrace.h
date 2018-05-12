@@ -17,7 +17,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-# define SIZE_ARR 10
+# define SIZE_ARR 65536
 
 # define SUCCESS 0
 # define ERROR 1
@@ -26,7 +26,7 @@
 # define RIGHT 1
 # define SAME 2
 
-# define BUFF_SIZE 8
+# define BUFF_SIZE 65536
 
 typedef struct		s_tree
 {
@@ -60,5 +60,6 @@ int			ft_tree_new(t_tree **arri, t_tree *new);
 int			ft_cmp(char *s1, char *s2, int size);
 int			ft_tree_add(t_tree *arri, t_tree *new);
 t_tree		*ft_tree_get(t_tree *arri, char *key);
+uint32_t	super_fast_hash(const char *data, int len);
 
 #endif

@@ -6,13 +6,35 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/11 22:02:34 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/05/11 22:02:34 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/05/12 14:02:27 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/*
+**   ____________________________________________________________
+**   | main.c                                                   |
+**   |     ft_add_key(11 lines)                                 |
+**   |     ft_len(6 lines)                                      |
+**   |     ft_algo(4 lines)                                     |
+**   |     ft_parse_get(17 lines)                               |
+**   |     ft_hash(11 lines)                                    |
+**   |     ft_parse(28 lines)                                   |
+**   |         MEUUUU too many lines                            |
+**   |     ft_init(2 lines)                                     |
+**   |     main(11 lines)                                       |
+**   | MEUUUU too many functions                                |
+**   ------------------------------------------------------------
+**           __n__n__  /
+**    .------`-\00/-'/
+**   /  ##  ## (oo)
+**  / \## __   ./
+**     |//YY \|/
+**     |||   |||
+*/
+
 #include <hotrace.h>
 
-int			ft_add_key(t_a *a, int start, t_tree *new, int index)
+int			ft_add_key(t_a *a, t_tree *new, int index)
 {
 	if (a->arr[index] == NULL)
 	{
@@ -37,6 +59,14 @@ int			ft_len(char *s, char c)
 	return (i);
 }
 
+int			ft_algo(char *key, int len)
+{
+	int		ret;
+
+	ret = super_fast_hash(key, len) >> 16;
+	return (ret);
+}
+
 int			ft_parse_get(t_a *a, int start)
 {
 	int		index;
@@ -48,7 +78,7 @@ int			ft_parse_get(t_a *a, int start)
 	{
 		if (a->str[i] == '\n')
 		{
-			index = ft_algo(&(a->str[start]));
+			index = ft_algo(&(a->str[start]), ft_len(&(a->str[start]), '\n'));
 			result = ft_tree_get(a->arr[index], &(a->str[start]));
 			start = i + 1;
 			write(STDOUT_FILENO, result->value, result->len_value);
@@ -56,11 +86,6 @@ int			ft_parse_get(t_a *a, int start)
 		}
 	}
 	return (SUCCESS);
-}
-
-int			ft_algo(char *key, char *len)
-{
-	return (0);
 }
 
 int			ft_hash(t_a *a, int start)
@@ -73,7 +98,7 @@ int			ft_hash(t_a *a, int start)
 	new.value = &(a->str[start + new.len_key + 1]);
 	new.len_value = ft_len(&(a->str[start + new.len_key + 1]), '\n');
 	index = ft_algo(new.key, new.len_key);
-	if (ft_add_key(a, start, &new, index) == ERROR)
+	if (ft_add_key(a, &new, index) == ERROR)
 		return (ERROR);
 	return (SUCCESS);
 }
