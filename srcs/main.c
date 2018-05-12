@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/11 22:02:34 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/05/12 15:45:19 by pmilan           ###   ########.fr       */
+/*   Updated: 2018/05/12 17:01:23 by pmilan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int			ft_parse_get(t_a *a, int start)
 	int		index;
 	t_tree	*result;
 	int		i;
-	char	error[] = ": Not found.\n";
+	char	*error = ": Not found.\n";
 	int		len;
 
 	i = start - 1;
@@ -96,8 +96,8 @@ int			ft_parse_get(t_a *a, int start)
 			}
 			else
 			{
-				write(STDOUT_FILENO, result->value, result->len_value);
-				write(STDOUT_FILENO, "\n", 1);
+				write(STDOUT_FILENO, result->value, result->len_value + 1);
+//				write(STDOUT_FILENO, "\n", 1);
 			}
 			start = i + 1;
 		}
