@@ -12,7 +12,19 @@
 
 NAME = hotrace
 
-FILES = main.c
+ARG = "resources/test01.htr"
+
+FILES = main.c \
+		tree.c \
+		ft_bzero.c \
+		ft_strcmp.c \
+		ft_strdup.c \
+		ft_strlen.c \
+		ft_read_fd.c \
+		ft_strncat.c \
+		ft_realloc.c \
+		ft_memcpy.c \
+		ft_memcmp.c
 
 HFILES = includes/hotrace.h
 
@@ -74,5 +86,10 @@ fclean: clean
 
 re: fclean
 	@make
+
+exec:
+	@clear
+	@make
+	@./$(NAME) < $(ARG)
 
 .PHONY: all clean fclean re
