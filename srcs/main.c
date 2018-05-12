@@ -12,111 +12,121 @@
 
 #include <hotrace.h>
 
-int			ft_tree_new(t_tree **arri, char *key, char *value)
+int			ft_add_key(t_a *a, int start, t_tree *new, int index)
 {
-	if (!(*arri = malloc(sizeof(t_tree))))
-		return ERROR;
-	(*arri)->key = strdup(key);////////////////////
-	(*arri)->value = strdup(value);////////////////////
-	(*arri)->left = NULL;
-	(*arri)->right = NULL;
-	return SUCCESS;
-}
-
-int			ft_cmp(char *s1, char *s2)
-{
-	int		cmp;
-
-	cmp = strcmp(s1, s2);/////////////
-	if (cmp < 0)
-		return RIGHT;
-	if (cmp > 0)
-		return LEFT;
-	return SAME;
-}
-
-int			ft_tree_add(t_tree *arri, char *key, char *value)
-{
-	int		cmp;
-
-	cmp = ft_cmp(arri->key, key);
-	if (cmp == LEFT)
+	if (a->arr[index] == NULL)
 	{
-		if (arri->left == NULL)
-		{
-			if (ft_tree_new(&(arri->left), key, value) == ERROR)
-				return ERROR;
-		}
-		else
-			return ft_tree_add(arri->left, key, value);
+		if (ft_tree_new(&(a->arr[index]), new) == ERROR)
+			return (ERROR);
 	}
-	else if (cmp == RIGHT)
+	else
 	{
-		if (arri->right == NULL)
-		{
-			if (ft_tree_new(&(arri->right), key, value) == ERROR)
-				return ERROR;
-		}
-		else
-			return ft_tree_add(arri->right, key, value);
+		if (ft_tree_add(a->arr[index], new) == ERROR)
+			return (ERROR);
 	}
-	else if (cmp == SAME)
-	{
-		printf("same\n");/////////////////
-	}
-	return SUCCESS;
+	return (SUCCESS);
 }
 
-char		*ft_tree_get(t_tree *arri, char *key)
+int			ft_len(char *s, char c)
 {
-	int		cmp;
-
-	if (arri == NULL)
-		return NULL;
-	cmp = ft_cmp(arri->key, key);
-	if (cmp == SAME)
-		return arri->key;////////////////
-	else if (cmp == LEFT)
-		return ft_tree_get(arri->left, key);
-	else if (cmp == RIGHT)
-		return ft_tree_get(arri->right, key);
-	return NULL;
-}
-
-int 		ft_ft()
-{
-	char	*str[] = {"seksek", "serge", "goinfre", "ugo", "man", "billy", "emarin", "sous merde", "negro", "(terpri)", "gilles", "jhubert", "zouave", "dechet", "ohemecoin", "barachet", "gamouche", "arr", 0};
-	t_tree	*(arr[SIZE_ARR]);
 	int		i;
-	int		index = 0;
 
-	arr[0] = NULL;
 	i = -1;
-	while (str[++i])
+	while (s[++i] != c && s[i])
+		;
+	return (i);
+}
+
+int			ft_parse_get(t_a *a, int start)
+{
+	int		index;
+	t_tree	*result;
+	int		i;
+
+	i = start - 1;
+	while (a->str[++i])
 	{
-		if (arr[index] == NULL)
+		if (a->str[i] == '\n')
 		{
-			if (ft_tree_new(&(arr[index]), str[i], "value") == ERROR)
-				return ERROR;
-		}
-		else
-		{
-			if (ft_tree_add(arr[index], str[i], "value") == ERROR)
-				return ERROR;
+			index = ft_algo(&(a->str[start]));
+			result = ft_tree_get(a->arr[index], &(a->str[start]));
+			start = i + 1;
+			write(STDOUT_FILENO, result->value, result->len_value);
+			write(STDOUT_FILENO, "\n", 1);
 		}
 	}
-	printf("%s\n", ft_tree_get(arr[0], str[9]));
-	return SUCCESS;
+	return (SUCCESS);
+}
+
+int			ft_algo(char *key, char *len)
+{
+	return (0);
+}
+
+int			ft_hash(t_a *a, int start)
+{
+	t_tree	new;
+	int		index;
+
+	new.len_key = ft_len(&(a->str[start]), '\n');
+	new.key = &(a->str[start]);
+	new.value = &(a->str[start + new.len_key + 1]);
+	new.len_value = ft_len(&(a->str[start + new.len_key + 1]), '\n');
+	index = ft_algo(new.key, new.len_key);
+	if (ft_add_key(a, start, &new, index) == ERROR)
+		return (ERROR);
+	return (SUCCESS);
+}
+
+int			ft_parse(t_a *a)
+{
+	int		start;
+	int		i;
+	int		nb_nl;
+
+	nb_nl = 0;
+	start = 0;
+	i = -1;
+	while (a->str[++i])
+	{
+		if (a->str[i] == '\n')
+		{
+			nb_nl++;
+			i++;
+			if (nb_nl == 2)
+			{
+				if (ft_hash(a, start) == ERROR)
+					return (ERROR);
+				start = i;
+				nb_nl = 0;
+			}
+			if (a->str[i] == '\n')
+			{
+				start = ++i;
+				return (ft_parse_get(a, start));
+			}
+		}
+	}
+	return (SUCCESS);
+}
+
+int			ft_init(t_a *a)
+{
+	ft_bzero(a, sizeof(a));
+	return (SUCCESS);
 }
 
 int			main(int ac, char **av)
 {
+	t_a		a;
+
 	(void)ac;
 	(void)av;
-	if (ft_ft() == ERROR)
-	{
-		printf("ERROR\n");
-		return ERROR;
-	}
-	return (0);
+	if (ft_init(&a) == ERROR)
+		return (EXIT_FAILURE);
+	if (ft_read_fd(STDIN_FILENO, &(a.str)) == 0)
+		return (EXIT_FAILURE);
+	if (ft_parse(&a) == ERROR)
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
