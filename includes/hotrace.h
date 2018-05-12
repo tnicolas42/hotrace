@@ -17,7 +17,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-# define SIZE 25
+# define SIZE 22
 # define SIZE_ARR (1 << SIZE)
 
 # define SUCCESS 0
@@ -27,7 +27,7 @@
 # define RIGHT 1
 # define SAME 2
 
-# define BUFF_SIZE (65536 << 5)
+# define BUFF_SIZE (1 << 27)
 
 typedef struct		s_tree
 {
