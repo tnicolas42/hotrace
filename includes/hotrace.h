@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/11 21:59:43 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/05/12 15:15:45 by pmilan           ###   ########.fr       */
+/*   Updated: 2018/05/12 15:47:45 by pmilan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-# define SIZE_ARR 65536 * 2.1
+# define SIZE 25
+# define SIZE_ARR (1 << SIZE)
 
 # define SUCCESS 0
 # define ERROR 1
@@ -26,7 +27,7 @@
 # define RIGHT 1
 # define SAME 2
 
-# define BUFF_SIZE 65536
+# define BUFF_SIZE (65536 << 5)
 
 typedef struct		s_tree
 {
@@ -42,7 +43,8 @@ typedef struct		s_tree
 
 typedef struct		s_a
 {
-	t_tree			*(arr[SIZE_ARR]);
+//	t_tree			*(arr[SIZE_ARR]);
+	t_tree			**arr;
 	char			*str;
 }					t_a;
 

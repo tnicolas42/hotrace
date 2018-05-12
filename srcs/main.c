@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/11 22:02:34 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/05/12 15:14:57 by pmilan           ###   ########.fr       */
+/*   Updated: 2018/05/12 15:45:19 by pmilan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int			ft_algo(char *key, int len)
 //	if (key[1] == 'A')
 //		return 60001;
 //	return 31115;
-	ret = super_fast_hash(key, len) >> 15;
+	ret = super_fast_hash(key, len) >> (32 - SIZE);
 //	printf("ret algo\t%d\n", ret);
 	return (ret);
 }
@@ -126,6 +126,7 @@ int			ft_parse(t_a *a)
 	int		i;
 	int		nb_nl;
 
+//	dprintf(STDERR_FILENO, "%d\n", SIZE_ARR);
 	nb_nl = 0;
 	start = 0;
 	i = -1;
@@ -154,10 +155,13 @@ int			ft_parse(t_a *a)
 
 int			ft_init(t_a *a)
 {
-	ft_bzero(a, sizeof(a));
+//	ft_bzero(a, sizeof(a));
+	a->str = NULL;
+	if (!(a->arr = malloc(SIZE_ARR * sizeof(t_tree*))))
+		return (ERROR);
 	return (SUCCESS);
 }
-
+#include <limits.h>
 int			main(int ac, char **av)
 {
 	t_a		a;
