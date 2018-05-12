@@ -6,7 +6,7 @@
 #    By: ynacache <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/08 10:53:49 by ynacache          #+#    #+#              #
-#    Updated: 2018/05/12 18:43:34 by pmilan           ###   ########.fr        #
+#    Updated: 2018/05/12 19:16:07 by pmilan           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,17 +15,19 @@ NAME = hotrace
 ARG = "resources/test01.htr"
 
 FILES = main.c \
+		init.c \
+		parsing.c \
 		tree.c \
+		hash.c \
+		free.c \
+		ft_len.c \
 		ft_bzero.c \
 		ft_strcmp.c \
-		ft_strdup.c \
-		ft_strlen.c \
 		ft_read_fd.c \
 		ft_strncat.c \
 		ft_realloc.c \
 		ft_memcpy.c \
-		ft_memcmp.c \
-		hash.c
+		ft_memcmp.c
 
 HFILES = includes/hotrace.h
 

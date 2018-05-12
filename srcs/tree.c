@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/12 10:35:42 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/05/12 14:57:36 by pmilan           ###   ########.fr       */
+/*   Updated: 2018/05/12 19:12:03 by pmilan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 **   | tree.c                                                   |
 **   |     ft_tree_new(9 lines)                                 |
 **   |     ft_cmp(14 lines)                                     |
-**   |     ft_tree_add(29 lines)                                |
-**   |         MEUUUU too many lines                            |
+**   |     ft_tree_add(25 lines)                                |
 **   |     ft_tree_get(12 lines)                                |
+**   |     ft_add_key(11 lines)                                 |
 **   ------------------------------------------------------------
 **           __n__n__  /
 **    .------`-\00/-'/
@@ -62,10 +62,9 @@ int			ft_cmp(char *s1, char *s2, int size1, int size2)
 
 int			ft_tree_add(t_tree *arri, t_tree *new)
 {
-	int		cmp;
+	int		cm;
 
-	cmp = ft_cmp(arri->key, new->key, arri->len_key, new->len_key);
-	if (cmp == LEFT)
+	if ((cm = ft_cmp(arri->key, new->key, arri->len_key, new->len_key)) == LEFT)
 	{
 		if (arri->left == NULL)
 		{
@@ -75,7 +74,7 @@ int			ft_tree_add(t_tree *arri, t_tree *new)
 		else
 			return (ft_tree_add(arri->left, new));
 	}
-	else if (cmp == RIGHT)
+	else if (cm == RIGHT)
 	{
 		if (arri->right == NULL)
 		{
@@ -85,7 +84,7 @@ int			ft_tree_add(t_tree *arri, t_tree *new)
 		else
 			return (ft_tree_add(arri->right, new));
 	}
-	else if (cmp == SAME && (arri->value = new->value))
+	else if (cm == SAME && (arri->value = new->value))
 		arri->len_value = new->len_value;
 	return (SUCCESS);
 }
@@ -104,4 +103,19 @@ t_tree		*ft_tree_get(t_tree *arri, char *key, int len_key)
 	else if (cmp == RIGHT)
 		return (ft_tree_get(arri->right, key, len_key));
 	return (NULL);
+}
+
+int			ft_add_key(t_a *a, t_tree *new, int index)
+{
+	if (a->arr[index] == NULL)
+	{
+		if (ft_tree_new(&(a->arr[index]), new) == ERROR)
+			return (ERROR);
+	}
+	else
+	{
+		if (ft_tree_add(a->arr[index], new) == ERROR)
+			return (ERROR);
+	}
+	return (SUCCESS);
 }
