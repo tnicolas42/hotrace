@@ -79,7 +79,7 @@ int				ft_hash(t_a *a, int start)
 	new.key = &(a->str[start]);
 	new.value = &(a->str[start + new.len_key + 1]);
 	new.len_value = ft_len(&(a->str[start + new.len_key + 1]), '\n');
-	index = super_fast_hash(new.key, new.len_key) >> (32 - SIZE);
+	index = super_fast_hash(new.key, new.len_key) & (SIZE_ARR - 1);
 	if (ft_add_key(a, &new, index) == ERROR)
 		return (ERROR);
 	return (SUCCESS);

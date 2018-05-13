@@ -16,8 +16,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-# define SIZE 22
-# define SIZE_ARR (1 << SIZE)
+# define SIZE_ARR (1 << 17)
 
 # define SUCCESS 0
 # define ERROR 1

@@ -39,7 +39,7 @@ static int		ft_parse_get(t_a *a, int start)
 		if (a->str[i] == '\n')
 		{
 			len = ft_len(&(a->str[start]), '\n');
-			index = super_fast_hash(&(a->str[start]), len) >> (32 - SIZE);
+			index = super_fast_hash(&(a->str[start]), len) & (SIZE_ARR - 1);
 			result = ft_tree_get(a->arr[index], &(a->str[start]), len);
 			if (result == NULL)
 			{

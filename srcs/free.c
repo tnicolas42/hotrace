@@ -43,5 +43,6 @@ int				ft_free(t_a *a)
 	i = -1;
 	while (++i < SIZE_ARR)
 		ft_free_tree(a->arr[i]);
+	free(a->arr);
 	return (SUCCESS);
 }
